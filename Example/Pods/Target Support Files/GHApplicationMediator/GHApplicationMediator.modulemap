@@ -1,0 +1,6 @@
+framework module GHApplicationMediator {
+  umbrella header "GHApplicationMediator-umbrella.h"
+
+  export *
+  module * { export * }
+}

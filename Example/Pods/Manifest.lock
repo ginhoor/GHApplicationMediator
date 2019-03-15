@@ -1,0 +1,27 @@
+PODS:
+  - Expecta (1.0.6)
+  - GHApplicationMediator (0.1.0)
+  - Specta (1.0.7)
+
+DEPENDENCIES:
+  - Expecta
+  - GHApplicationMediator (from `../`)
+  - Specta
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Expecta
+    - Specta
+
+EXTERNAL SOURCES:
+  GHApplicationMediator:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
+  GHApplicationMediator: d71428f10f1212f7533c5d1bab7d54fe3f08b6c3
+  Specta: 3e1bd89c3517421982dc4d1c992503e48bd5fe66
+
+PODFILE CHECKSUM: d0fc96c34780fbef0eed138097fb818dd1b3c7a9
+
+COCOAPODS: 1.6.0

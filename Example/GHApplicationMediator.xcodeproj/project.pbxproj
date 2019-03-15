@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00AFC75B223BAFDB005A33FC /* ModuleA.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AFC758223BAFDB005A33FC /* ModuleA.m */; };
+		00AFC75C223BAFDB005A33FC /* ModuleB.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AFC75A223BAFDB005A33FC /* ModuleB.m */; };
 		249490E36A22EFF6EE02D499 /* Pods_GHApplicationMediator_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49FFF15BEA504EB986F9651B /* Pods_GHApplicationMediator_Tests.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -37,6 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00AFC757223BAFDB005A33FC /* ModuleA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModuleA.h; sourceTree = "<group>"; };
+		00AFC758223BAFDB005A33FC /* ModuleA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModuleA.m; sourceTree = "<group>"; };
+		00AFC759223BAFDB005A33FC /* ModuleB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModuleB.h; sourceTree = "<group>"; };
+		00AFC75A223BAFDB005A33FC /* ModuleB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModuleB.m; sourceTree = "<group>"; };
 		49FFF15BEA504EB986F9651B /* Pods_GHApplicationMediator_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GHApplicationMediator_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58A195388D20070C39A /* GHApplicationMediator_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GHApplicationMediator_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -57,13 +63,13 @@
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
-		658CC8621C3F40105E902594 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		658CC8621C3F40105E902594 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84E1AAD694B46DDC949C87F7 /* Pods-GHApplicationMediator_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GHApplicationMediator_Tests.release.xcconfig"; path = "Target Support Files/Pods-GHApplicationMediator_Tests/Pods-GHApplicationMediator_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ADB159AE2E7E357BFEA18CFF /* Pods-GHApplicationMediator_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GHApplicationMediator_Tests.debug.xcconfig"; path = "Target Support Files/Pods-GHApplicationMediator_Tests/Pods-GHApplicationMediator_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		B7508DBAC3BF0C9C628DBC23 /* GHApplicationMediator.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = GHApplicationMediator.podspec; path = ../GHApplicationMediator.podspec; sourceTree = "<group>"; };
-		BB98AED0222AC8266921278C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		B7508DBAC3BF0C9C628DBC23 /* GHApplicationMediator.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = GHApplicationMediator.podspec; path = ../GHApplicationMediator.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		BB98AED0222AC8266921278C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		E9A4D0B5C244259FBC9F68EF /* Pods-GHApplicationMediator_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GHApplicationMediator_Example.release.xcconfig"; path = "Target Support Files/Pods-GHApplicationMediator_Example/Pods-GHApplicationMediator_Example.release.xcconfig"; sourceTree = "<group>"; };
 		EACD378CCD29F8AAF99527A6 /* Pods_GHApplicationMediator_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GHApplicationMediator_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F668A17B7368A57592FC5922 /* Pods-GHApplicationMediator_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GHApplicationMediator_Example.debug.xcconfig"; path = "Target Support Files/Pods-GHApplicationMediator_Example/Pods-GHApplicationMediator_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -134,9 +140,13 @@
 			children = (
 				6003F59C195388D20070C39A /* GHAppDelegate.h */,
 				6003F59D195388D20070C39A /* GHAppDelegate.m */,
-				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* GHViewController.h */,
 				6003F5A6195388D20070C39A /* GHViewController.m */,
+				00AFC757223BAFDB005A33FC /* ModuleA.h */,
+				00AFC758223BAFDB005A33FC /* ModuleA.m */,
+				00AFC759223BAFDB005A33FC /* ModuleB.h */,
+				00AFC75A223BAFDB005A33FC /* ModuleB.m */,
+				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
@@ -193,7 +203,6 @@
 				ADB159AE2E7E357BFEA18CFF /* Pods-GHApplicationMediator_Tests.debug.xcconfig */,
 				84E1AAD694B46DDC949C87F7 /* Pods-GHApplicationMediator_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -394,8 +403,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F59E195388D20070C39A /* GHAppDelegate.m in Sources */,
+				00AFC75C223BAFDB005A33FC /* ModuleB.m in Sources */,
 				6003F5A7195388D20070C39A /* GHViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				00AFC75B223BAFDB005A33FC /* ModuleA.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,6 +537,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GHApplicationMediator/GHApplicationMediator-Prefix.pch";
 				INFOPLIST_FILE = "GHApplicationMediator/GHApplicationMediator-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -541,6 +553,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GHApplicationMediator/GHApplicationMediator-Prefix.pch";
 				INFOPLIST_FILE = "GHApplicationMediator/GHApplicationMediator-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
