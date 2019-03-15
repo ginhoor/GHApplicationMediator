@@ -1,42 +1,35 @@
-#
-# Be sure to run `pod lib lint GHApplicationMediator.podspec' to ensure this is a
-# valid spec before submitting.
-#
-# Any lines starting with a # are optional, but their use is encouraged
-# To learn more about a Podspec see https://guides.cocoapods.org/syntax/podspec.html
-#
-
 Pod::Spec.new do |s|
-  s.name             = 'GHApplicationMediator'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of GHApplicationMediator.'
+    # 组件库名称
+    s.name             = 'GHApplicationMediator'
+    # 组件库当前版本，也就是tag指定的
+    s.version          = '0.1.0'
+    # 简介
+    s.summary          = 'make AppDelegate lighter.'
+    # 详细描述
+    s.description      = <<-DESC
+    manage appDelegate modules easier
+    DESC
+    # 组件库首页
+    s.homepage         = 'https://github.com/ginhoor/GHApplicationMediator'
+    # 组件库开源协议
+    s.license          = { :type => 'Apache License', :file => 'LICENSE' }
+    # 作者
+    s.author           = { 'ginhoor' => 'ginhoor@gmail.com' }
+    # Git仓库地址
+    s.source           = { :git => 'https://github.com/ginhoor/GHApplicationMediator.git', :tag => s.version.to_s }
+    # 依赖的iOS版本
+    s.ios.deployment_target = '10.0'
+    # 源文件地址
+    s.source_files = 'GHApplicationMediator/Classes/**/*'
+    # 依赖资源地址
+    # s.resource_bundles = {
+    #   'GHApplicationMediator' => ['GHApplicationMediator/Assets/*.png']
+    # }
+    # 头文件地址
+    # s.public_header_files = 'Pod/Classes/**/*.h'
+    # 依赖系统库
+    # s.frameworks = 'UIKit', 'MapKit'
+    # 依赖的第三方库
+    # s.dependency 'AFNetworking', '~> 2.3'
 
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
-
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
-
-  s.homepage         = 'https://github.com/ginhoor/GHApplicationMediator'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'ginhoor' => 'ginhoor@gmail.com' }
-  s.source           = { :git => 'https://github.com/ginhoor/GHApplicationMediator.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
-  s.ios.deployment_target = '8.0'
-
-  s.source_files = 'GHApplicationMediator/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'GHApplicationMediator' => ['GHApplicationMediator/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
 end
