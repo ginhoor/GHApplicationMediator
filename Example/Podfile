@@ -1,0 +1,14 @@
+use_frameworks!
+
+platform :ios, '8.0'
+
+target 'GHApplicationMediator_Example' do
+  pod 'GHApplicationMediator', :path => '../'
+
+  target 'GHApplicationMediator_Tests' do
+    inherit! :search_paths
+
+    pod 'Specta'
+    pod 'Expecta'
+  end
+end
