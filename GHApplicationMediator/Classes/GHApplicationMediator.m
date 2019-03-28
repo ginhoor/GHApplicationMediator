@@ -222,6 +222,7 @@
     
     [self.applicationModuleDelegates enumerateObjectsUsingBlock:^(id  _Nonnull delegate, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([delegate respondsToSelector:selector]) {
+            result = YES;
             *stop = YES;
         }
     }];
