@@ -10,6 +10,8 @@
 
 @interface GHApplicationMediator()
 
+@property (nonatomic, strong) NSMutableArray *applicationModuleDelegates;
+
 @end
 
 @implementation GHApplicationMediator
@@ -29,6 +31,11 @@
         sharedInstance = [[self alloc] init];
     });
     return sharedInstance;
+}
+
++ (NSArray *)applicationModuleDelegates
+{
+    return [GHApplicationMediator sharedInstance].applicationModuleDelegates;
 }
 
 + (void)registerAppilgationModuleDelegate:(id<UIApplicationDelegate>)moduleDelegate
@@ -51,29 +58,36 @@
 {
     GHApplicationMediator *mediator = [GHApplicationMediator sharedInstance];
 #ifdef DEBUG
-    NSEnumerator *enumerator = [mediator.applicationModuleDelegates objectEnumerator];
-    id<UIApplicationDelegate> delegate;
-    while ((delegate=enumerator.nextObject)) {
-        NSAssert(![delegate isKindOfClass:[moduleDelegate class]], @"ERROR：重复添加的delegate：%@", [moduleDelegate class]);
-    }
+    
+    [mediator.applicationModuleDelegates enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        NSAssert(![obj isKindOfClass:[moduleDelegate class]], @"ERROR：重复添加的delegate：%@", [moduleDelegate class]);
+    }];
 #endif
     [mediator.applicationModuleDelegates addObject:moduleDelegate];
+#ifdef DEBUG
+    NSLog(@"applicationModuleDelegates：\n%@",mediator.applicationModuleDelegates);
+#endif
 }
 
 + (BOOL)removeModuleDelegateByClass:(Class)moduleClass
 {
     GHApplicationMediator *mediator = [GHApplicationMediator sharedInstance];
-
+    
     BOOL result = NO;
-    NSEnumerator *enumerator = [mediator.applicationModuleDelegates objectEnumerator];
-    id<UIApplicationDelegate> delegate;
-    while ((delegate=enumerator.nextObject)) {
+    NSInteger i = 0;
+    NSInteger count = mediator.applicationModuleDelegates.count;
+    while (i < count) {
+        id delegate = mediator.applicationModuleDelegates[i];
         if ([delegate isKindOfClass:moduleClass]) {
             [mediator.applicationModuleDelegates removeObject:delegate];
+            count--;
             result = YES;
             break;
         }
+        i++;
     }
+    
     return result;
 }
 
@@ -88,7 +102,7 @@
 
 - (void)setup
 {
-    _applicationModuleDelegates = [[NSHashTable alloc] initWithOptions:NSPointerFunctionsStrongMemory capacity:10];
+    _applicationModuleDelegates = [NSMutableArray array];
     [self setupDefaultValues];
 }
 
@@ -144,7 +158,9 @@
             NSUInteger returnValueLenth = anInvocation.methodSignature.methodReturnLength;
             BOOL *retValue = (BOOL *)malloc(returnValueLenth);
             [anInvocation getReturnValue:retValue];
-            return *retValue;
+            
+            BOOL result = *retValue;
+            return result;
         }];
     } else {
         // 等同于[self doesNotRecognizeSelector:anInvocation.selector];
@@ -202,29 +218,25 @@
 
 - (BOOL)hasDelegateRespondsToSelector:(SEL)selector
 {
-    BOOL result = NO;
-    NSEnumerator *enumerater = _applicationModuleDelegates.objectEnumerator;
-    id delegate;
-    while ((delegate = enumerater.nextObject)) {
-        result = [delegate respondsToSelector:selector];
-        if (result) {
-            break;
+    __block BOOL result = NO;
+    
+    [self.applicationModuleDelegates enumerateObjectsUsingBlock:^(id  _Nonnull delegate, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([delegate respondsToSelector:selector]) {
+            *stop = YES;
         }
-    }
+    }];
     return result;
 }
 
 - (id)delegateRespondsToSelector:(SEL)selector
 {
-    id resultDelegate;
-    NSEnumerator *enumerater = _applicationModuleDelegates.objectEnumerator;
-    id delegate;
-    while ((delegate = enumerater.nextObject)) {
+    __block id resultDelegate;
+    [self.applicationModuleDelegates enumerateObjectsUsingBlock:^(id  _Nonnull delegate, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([delegate respondsToSelector:selector]) {
             resultDelegate = delegate;
-            break;
+            *stop = YES;
         }
-    }
+    }];
     return resultDelegate;
 }
 
@@ -239,16 +251,14 @@
     if (_applicationModuleDelegates.count == 0) {
         return;
     }
-    NSEnumerator *enumerater = _applicationModuleDelegates.objectEnumerator;
     
-    id delegate;
-    while ((delegate = enumerater.nextObject)) {
+    [self.applicationModuleDelegates enumerateObjectsUsingBlock:^(id  _Nonnull delegate, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([delegate respondsToSelector:selector]) {
             if (nofityHandler) {
                 nofityHandler(delegate);
             }
         }
-    }
+    }];
 }
 
 /**
@@ -261,22 +271,20 @@
  */
 - (BOOL)notifySelectorOfAllDelegateUntilSuccessed:(SEL)selector defaultReturnValue:(BOOL)defaultReturnValue nofityHandler:(BOOL(^)(id delegate))nofityHandler
 {
-    BOOL success = defaultReturnValue;
+    __block BOOL success = defaultReturnValue;
     if (_applicationModuleDelegates.count == 0) {
         return success;
     }
-    NSEnumerator *enumerater = _applicationModuleDelegates.objectEnumerator;
-    id delegate;
-    while ((delegate = enumerater.nextObject)) {
+    [self.applicationModuleDelegates enumerateObjectsUsingBlock:^(id  _Nonnull delegate, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([delegate respondsToSelector:selector]) {
             if (nofityHandler) {
                 success = nofityHandler(delegate);
                 if (success) {
-                    break;
+                    *stop = YES;
                 }
             }
         }
-    }
+    }];
     return success;
 }
 

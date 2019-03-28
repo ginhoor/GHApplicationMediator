@@ -1,6 +1,6 @@
 //
 //  GHApplicationMediator.h
-//  CommercialVehiclePlatform
+//  
 //
 //  Created by JunhuaShao on 2019/3/4.
 //  Copyright © 2019 JunhuaShao. All rights reserved.

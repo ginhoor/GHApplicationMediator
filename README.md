@@ -1,5 +1,4 @@
-# GHApplicationMediator
-
+#GHApplicationMediator
 ## 为什么AppDelegate不容易维护
 
 AppDelegate控制着App的主要生命周期，比如App初始化完成后构建主视图，App接收到远程消息回调，Url-Scheme回调，第三方SDK初始化，数据库初始化等等。
@@ -20,32 +19,32 @@ AppDelegate控制着App的主要生命周期，比如App初始化完成后构建
 @interface AppDelegate (CEReachability)
 - (void)setupReachability;
 @end
-    
+
 @implementation AppDelegate (CEReachability)
 
 - (void)setupReachability
 {
-    // Allocate a reachability object
-    Reachability *reach = [Reachability reachabilityWithHostname:kServerBaseUrl];
-    
-    // Set the blocks
-    reach.reachableBlock = ^(Reachability *reach) {
-        
-        if (reach.currentReachabilityStatus == ReachableViaWWAN) {
-            BLYLogInfo(@"ReachabilityStatusChangeBlock--->蜂窝数据网");
-            [CESettingsManager sharedInstance].needNoWifiAlert = YES;
-        } else if (reach.currentReachabilityStatus == ReachableViaWiFi) {
-            BLYLogInfo(@"ReachabilityStatusChangeBlock--->WiFi网络");
-            [CESettingsManager sharedInstance].needNoWifiAlert = NO;
-        }
-    };
-    
-    reach.unreachableBlock = ^(Reachability *reach) {
-        BLYLogInfo(@"ReachabilityStatusChangeBlock--->未知网络状态");
-    };
-    
-    // Start the notifier, which will cause the reachability object to retain itself!
-    [reach startNotifier];   
+// Allocate a reachability object
+Reachability *reach = [Reachability reachabilityWithHostname:kServerBaseUrl];
+
+// Set the blocks
+reach.reachableBlock = ^(Reachability *reach) {
+
+if (reach.currentReachabilityStatus == ReachableViaWWAN) {
+BLYLogInfo(@"ReachabilityStatusChangeBlock--->蜂窝数据网");
+[CESettingsManager sharedInstance].needNoWifiAlert = YES;
+} else if (reach.currentReachabilityStatus == ReachableViaWiFi) {
+BLYLogInfo(@"ReachabilityStatusChangeBlock--->WiFi网络");
+[CESettingsManager sharedInstance].needNoWifiAlert = NO;
+}
+};
+
+reach.unreachableBlock = ^(Reachability *reach) {
+BLYLogInfo(@"ReachabilityStatusChangeBlock--->未知网络状态");
+};
+
+// Start the notifier, which will cause the reachability object to retain itself!
+[reach startNotifier];   
 }
 ```
 
@@ -60,8 +59,8 @@ AppDelegate控制着App的主要生命周期，比如App初始化完成后构建
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self setupReachability];
-    return YES;
+[self setupReachability];
+return YES;
 }
 ```
 
@@ -125,17 +124,17 @@ ApplicationMediator是一个单例，用于管理模块的注册与移除。
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    window.backgroundColor = [UIColor whiteColor];
-    // 需要将Window赋值给AppDelegate，有多时候会用全局AppDelegate去获取Window。
-    [UIApplication sharedApplication].delegate.window = window;
-    
-    CELaunchPageViewController *launchVC = [[CELaunchPageViewController alloc] init];
+UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+window.backgroundColor = [UIColor whiteColor];
+// 需要将Window赋值给AppDelegate，有多时候会用全局AppDelegate去获取Window。
+[UIApplication sharedApplication].delegate.window = window;
 
-    window.rootViewController = launchVC;
-    [window makeKeyAndVisible];
-    
-    return YES;
+CELaunchPageViewController *launchVC = [[CELaunchPageViewController alloc] init];
+
+window.rootViewController = launchVC;
+[window makeKeyAndVisible];
+
+return YES;
 }
 @end
 ```
@@ -147,24 +146,24 @@ ApplicationMediator是一个单例，用于管理模块的注册与移除。
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  // Allocate a reachability object
-  Reachability *reach = [Reachability reachabilityWithHostname:kServerBaseUrl];
-  
-  // Set the blocks
-  reach.reachableBlock = ^(Reachability *reach) {
-    
-    if (reach.currentReachabilityStatus == ReachableViaWWAN) {
-      BLYLogInfo(@"ReachabilityStatusChangeBlock--->蜂窝数据网");
-    } else if (reach.currentReachabilityStatus == ReachableViaWiFi) {
-      BLYLogInfo(@"ReachabilityStatusChangeBlock--->WiFi网络");
-    }
-  };
-  
-  reach.unreachableBlock = ^(Reachability *reach) {
-    BLYLogInfo(@"ReachabilityStatusChangeBlock--->未知网络状态");
-  };  
-  [reach startNotifier];
-  return YES;
+// Allocate a reachability object
+Reachability *reach = [Reachability reachabilityWithHostname:kServerBaseUrl];
+
+// Set the blocks
+reach.reachableBlock = ^(Reachability *reach) {
+
+if (reach.currentReachabilityStatus == ReachableViaWWAN) {
+BLYLogInfo(@"ReachabilityStatusChangeBlock--->蜂窝数据网");
+} else if (reach.currentReachabilityStatus == ReachableViaWiFi) {
+BLYLogInfo(@"ReachabilityStatusChangeBlock--->WiFi网络");
+}
+};
+
+reach.unreachableBlock = ^(Reachability *reach) {
+BLYLogInfo(@"ReachabilityStatusChangeBlock--->未知网络状态");
+};  
+[reach startNotifier];
+return YES;
 }
 
 @end
@@ -181,8 +180,8 @@ ApplicationMediator是一个单例，用于管理模块的注册与移除。
 + (void)load
 {
 //    CoreData
-    [CEApplicationMediator registerAppilgationModuleDelegate:[[CEAMCoreDataDelegate alloc] init]];
-// 		...
+[CEApplicationMediator registerAppilgationModuleDelegate:[[CEAMCoreDataDelegate alloc] init]];
+//         ...
 }
 @end
 ```
@@ -218,23 +217,23 @@ AppDelegate的所有方法都转由ApplicationMediator处理，模块转发逻�
 
 + (void)load
 {
-	//注册模块
+//注册模块
 }
 
 - (BOOL)respondsToSelector:(SEL)aSelector
 {
-    return [[CEApplicationMediator sharedInstance] respondsToSelector:aSelector];
+return [[CEApplicationMediator sharedInstance] respondsToSelector:aSelector];
 }
 
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector
 {
-    return [[CEApplicationMediator sharedInstance] methodSignatureForSelector:aSelector];
+return [[CEApplicationMediator sharedInstance] methodSignatureForSelector:aSelector];
 }
 
 - (void)forwardInvocation:(NSInvocation *)anInvocation
 {
-    [[CEApplicationMediator sharedInstance] forwardInvocation:anInvocation];
+[[CEApplicationMediator sharedInstance] forwardInvocation:anInvocation];
 }
 @end
 ```
@@ -246,142 +245,136 @@ AppDelegate的所有方法都转由ApplicationMediator处理，模块转发逻�
 ```objc
 #pragma mark- Handle Method
 /**
- 无法通过[super respondsToSelector:aSelector]来检测对象是否从super继承了方法。
- 因此调用[super respondsToSelector:aSelector]，相当于调用了[self respondsToSelector:aSelector]
- **/
+无法通过[super respondsToSelector:aSelector]来检测对象是否从super继承了方法。
+因此调用[super respondsToSelector:aSelector]，相当于调用了[self respondsToSelector:aSelector]
+**/
 - (BOOL)respondsToSelector:(SEL)aSelector
 {
-    BOOL result = [super respondsToSelector:aSelector];
-    if (!result) {
-        result = [self hasDelegateRespondsToSelector:aSelector];
-    }
-    return result;
+BOOL result = [super respondsToSelector:aSelector];
+if (!result) {
+result = [self hasDelegateRespondsToSelector:aSelector];
+}
+return result;
 }
 
 /**
- 此方法还被用于当NSInvocation被创建的时候，比如在消息传递的时候。
- 如果当前Classf可以处理未被直接实现的方法，则必须覆写此方法。
- */
+此方法还被用于当NSInvocation被创建的时候，比如在消息传递的时候。
+如果当前Classf可以处理未被直接实现的方法，则必须覆写此方法。
+*/
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector
 {
-    id delegate = [self delegateRespondsToSelector:aSelector];
-    if (delegate) {
-        return [delegate methodSignatureForSelector:aSelector];
-    }
-    return [super methodSignatureForSelector:aSelector];
+id delegate = [self delegateRespondsToSelector:aSelector];
+if (delegate) {
+return [delegate methodSignatureForSelector:aSelector];
+}
+return [super methodSignatureForSelector:aSelector];
 }
 
 /**
- 无法识别的消息处理
- */
+无法识别的消息处理
+*/
 - (void)forwardInvocation:(NSInvocation *)anInvocation
 {
-    __block BOOL isExec = NO;
-    
-    NSMethodSignature *methodSignature = anInvocation.methodSignature;
-    const char *returnType = methodSignature.methodReturnType;
-    // 没有返回值，或者默认返回YES
-    if (0 == strcmp(returnType, @encode(void)) ||
-        anInvocation.selector == @selector(application:didFinishLaunchingWithOptions:)) {
-        [self notifySelectorOfAllDelegates:anInvocation.selector nofityHandler:^(id delegate) {
-            [anInvocation invokeWithTarget:delegate];
-            isExec = YES;
-        }];
-    } else if (0 == strcmp(returnType, @encode(BOOL))) {
-        // 返回值为BOOL
-        [self notifySelectorOfAllDelegateUntilSuccessed:anInvocation.selector defaultReturnValue:NO nofityHandler:^BOOL(id delegate) {
-            
-            [anInvocation invokeWithTarget:delegate];
-            // 获得返回值
-            NSUInteger returnValueLenth = anInvocation.methodSignature.methodReturnLength;
-            BOOL *retValue = (BOOL *)malloc(returnValueLenth);
-            [anInvocation getReturnValue:retValue];
-            return *retValue;
-        }];
-    } else {
-        // 等同于[self doesNotRecognizeSelector:anInvocation.selector];
-        [super forwardInvocation:anInvocation];
-    }
+__block BOOL isExec = NO;
+
+NSMethodSignature *methodSignature = anInvocation.methodSignature;
+const char *returnType = methodSignature.methodReturnType;
+// 没有返回值，或者默认返回YES
+if (0 == strcmp(returnType, @encode(void)) ||
+anInvocation.selector == @selector(application:didFinishLaunchingWithOptions:)) {
+[self notifySelectorOfAllDelegates:anInvocation.selector nofityHandler:^(id delegate) {
+[anInvocation invokeWithTarget:delegate];
+isExec = YES;
+}];
+} else if (0 == strcmp(returnType, @encode(BOOL))) {
+// 返回值为BOOL
+[self notifySelectorOfAllDelegateUntilSuccessed:anInvocation.selector defaultReturnValue:NO nofityHandler:^BOOL(id delegate) {
+
+[anInvocation invokeWithTarget:delegate];
+// 获得返回值
+NSUInteger returnValueLenth = anInvocation.methodSignature.methodReturnLength;
+BOOL *retValue = (BOOL *)malloc(returnValueLenth);
+[anInvocation getReturnValue:retValue];
+
+BOOL result = *retValue;
+return result;
+}];
+} else {
+// 等同于[self doesNotRecognizeSelector:anInvocation.selector];
+[super forwardInvocation:anInvocation];
+}
 }
 
 - (BOOL)hasDelegateRespondsToSelector:(SEL)selector
 {
-    BOOL result = NO;
-    NSEnumerator *enumerater = _applicationModuleDelegates.objectEnumerator;
-    id delegate;
-    while ((delegate = enumerater.nextObject)) {
-        result = [delegate respondsToSelector:selector];
-        if (result) {
-            break;
-        }
-    }
-    return result;
+__block BOOL result = NO;
+
+[self.applicationModuleDelegates enumerateObjectsUsingBlock:^(id  _Nonnull delegate, NSUInteger idx, BOOL * _Nonnull stop) {
+if ([delegate respondsToSelector:selector]) {
+*stop = YES;
+}
+}];
+return result;
 }
 
 - (id)delegateRespondsToSelector:(SEL)selector
 {
-    id resultDelegate;
-    NSEnumerator *enumerater = _applicationModuleDelegates.objectEnumerator;
-    id delegate;
-    while ((delegate = enumerater.nextObject)) {
-        if ([delegate respondsToSelector:selector]) {
-            resultDelegate = delegate;
-            break;
-        }
-    }
-    return resultDelegate;
+__block id resultDelegate;
+[self.applicationModuleDelegates enumerateObjectsUsingBlock:^(id  _Nonnull delegate, NSUInteger idx, BOOL * _Nonnull stop) {
+if ([delegate respondsToSelector:selector]) {
+resultDelegate = delegate;
+*stop = YES;
+}
+}];
+return resultDelegate;
 }
 
 /**
- 通知所有delegate响应方法
- 
- @param selector 响应方法
- @param nofityHandler delegated处理调用事件
- */
+通知所有delegate响应方法
+
+@param selector 响应方法
+@param nofityHandler delegated处理调用事件
+*/
 - (void)notifySelectorOfAllDelegates:(SEL)selector nofityHandler:(void(^)(id delegate))nofityHandler
 {
-    if (_applicationModuleDelegates.count == 0) {
-        return;
-    }
-    NSEnumerator *enumerater = _applicationModuleDelegates.objectEnumerator;
-    
-    id delegate;
-    while ((delegate = enumerater.nextObject)) {
-        if ([delegate respondsToSelector:selector]) {
-            if (nofityHandler) {
-                nofityHandler(delegate);
-            }
-        }
-    }
+if (_applicationModuleDelegates.count == 0) {
+return;
+}
+
+[self.applicationModuleDelegates enumerateObjectsUsingBlock:^(id  _Nonnull delegate, NSUInteger idx, BOOL * _Nonnull stop) {
+if ([delegate respondsToSelector:selector]) {
+if (nofityHandler) {
+nofityHandler(delegate);
+}
+}
+}];
 }
 
 /**
- 通知所有的delegate，当有delegate响应为成功后，中断通知。
- 
- @param selector 响应方法
- @param defaultReturnValue 默认返回值（当设置为YES时，即使没有响应对象也会返回YES。）
- @param nofityHandler delegate处理调用事件
- @return delegate处理结果
- */
+通知所有的delegate，当有delegate响应为成功后，中断通知。
+
+@param selector 响应方法
+@param defaultReturnValue 默认返回值（当设置为YES时，即使没有响应对象也会返回YES。）
+@param nofityHandler delegate处理调用事件
+@return delegate处理结果
+*/
 - (BOOL)notifySelectorOfAllDelegateUntilSuccessed:(SEL)selector defaultReturnValue:(BOOL)defaultReturnValue nofityHandler:(BOOL(^)(id delegate))nofityHandler
 {
-    BOOL success = defaultReturnValue;
-    if (_applicationModuleDelegates.count == 0) {
-        return success;
-    }
-    NSEnumerator *enumerater = _applicationModuleDelegates.objectEnumerator;
-    id delegate;
-    while ((delegate = enumerater.nextObject)) {
-        if ([delegate respondsToSelector:selector]) {
-            if (nofityHandler) {
-                success = nofityHandler(delegate);
-                if (success) {
-                    break;
-                }
-            }
-        }
-    }
-    return success;
+__block BOOL success = defaultReturnValue;
+if (_applicationModuleDelegates.count == 0) {
+return success;
+}
+[self.applicationModuleDelegates enumerateObjectsUsingBlock:^(id  _Nonnull delegate, NSUInteger idx, BOOL * _Nonnull stop) {
+if ([delegate respondsToSelector:selector]) {
+if (nofityHandler) {
+success = nofityHandler(delegate);
+if (success) {
+*stop = YES;
+}
+}
+}
+}];
+return success;
 }
 ```
 

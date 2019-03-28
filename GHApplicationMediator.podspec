@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
     # 组件库名称
     s.name             = 'GHApplicationMediator'
     # 组件库当前版本，也就是tag指定的
-    s.version          = '0.1.0'
+    s.version          = '0.1.1'
     # 简介
     s.summary          = 'make AppDelegate lighter.'
     # 详细描述

@@ -14,9 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GHApplicationMediator : UIResponder<UIApplicationDelegate, UNUserNotificationCenterDelegate>
 
-@property (nonatomic, strong) NSHashTable *applicationModuleDelegates;
 
 + (instancetype)sharedInstance;
+
++ (NSArray *)applicationModuleDelegates;
 
 + (void)registerAppilgationModuleDelegate:(id<UIApplicationDelegate>)moduleDelegate;
 + (void)registerNotificationModuleDelegate:(id<UIApplicationDelegate, UNUserNotificationCenterDelegate>)moduleDelegate;
