@@ -1,6 +1,6 @@
 //
 //  GHApplicationMediator.m
-//  CommercialVehiclePlatform
+//  GinhoorFramework
 //
 //  Created by JunhuaShao on 2019/3/4.
 //  Copyright © 2019 JunhuaShao. All rights reserved.
@@ -9,18 +9,10 @@
 #import "GHApplicationMediator.h"
 
 @interface GHApplicationMediator()
-
 @property (nonatomic, strong) NSMutableArray *applicationModuleDelegates;
-
 @end
 
 @implementation GHApplicationMediator
-
-- (void)setupDefaultValues
-{
-    // 根据APP需要，判断是否要提示用户Badge、Sound、Alert
-    self.defaultNotificationPresentationOptions = UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert;
-}
 
 + (instancetype)sharedInstance
 {
@@ -45,27 +37,17 @@
     [self addModuleDelegate:moduleDelegate];
 }
 
-+ (void)registerNotificationModuleDelegate:(id<UIApplicationDelegate, UNUserNotificationCenterDelegate>)moduleDelegate
-{
-    NSAssert(moduleDelegate, @"ERROR：添加的AppDelegate为空", [moduleDelegate class]);
-    NSAssert([moduleDelegate conformsToProtocol:@protocol(UIApplicationDelegate)], @"ERROR：添加的AppDelegate未实现<UIApplicationDelegate>", [moduleDelegate class]);
-    NSAssert([moduleDelegate conformsToProtocol:@protocol(UNUserNotificationCenterDelegate)], @"ERROR：添加的AppDelegate未实现<UNUserNotificationCenterDelegate>", [moduleDelegate class]);
-    
-    [self addModuleDelegate:moduleDelegate];
-}
-
 + (void)addModuleDelegate:(id)moduleDelegate
 {
     GHApplicationMediator *mediator = [GHApplicationMediator sharedInstance];
-#ifdef DEBUG
-    
+#if GHAPPLICATIONMEDIATOR_DEBUG_MODE
     [mediator.applicationModuleDelegates enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
         NSAssert(![obj isKindOfClass:[moduleDelegate class]], @"ERROR：重复添加的delegate：%@", [moduleDelegate class]);
     }];
 #endif
     [mediator.applicationModuleDelegates addObject:moduleDelegate];
-#ifdef DEBUG
+#if GHAPPLICATIONMEDIATOR_DEBUG_MODE
     NSLog(@"applicationModuleDelegates：\n%@",mediator.applicationModuleDelegates);
 #endif
 }
@@ -73,21 +55,14 @@
 + (BOOL)removeModuleDelegateByClass:(Class)moduleClass
 {
     GHApplicationMediator *mediator = [GHApplicationMediator sharedInstance];
-    
-    BOOL result = NO;
-    NSInteger i = 0;
-    NSInteger count = mediator.applicationModuleDelegates.count;
-    while (i < count) {
-        id delegate = mediator.applicationModuleDelegates[i];
-        if ([delegate isKindOfClass:moduleClass]) {
+    __block BOOL result = NO;
+    [mediator.applicationModuleDelegates enumerateObjectsUsingBlock:^(id  _Nonnull delegate, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([delegate isMemberOfClass:moduleClass]) {
             [mediator.applicationModuleDelegates removeObject:delegate];
-            count--;
             result = YES;
-            break;
+            *stop = YES;
         }
-        i++;
-    }
-    
+    }];
     return result;
 }
 
@@ -103,7 +78,6 @@
 - (void)setup
 {
     _applicationModuleDelegates = [NSMutableArray array];
-    [self setupDefaultValues];
 }
 
 #pragma mark- Handle Method
@@ -168,51 +142,6 @@
     }
 }
 
-#pragma mark- Delegate
-
-#pragma mark iOS10以下 收到推送消息
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
-{
-    __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultNewData;
-    [self notifySelectorOfAllDelegates:@selector(application:didReceiveRemoteNotification:fetchCompletionHandler:) nofityHandler:^(id<UIApplicationDelegate> delegate) {
-        [delegate application:application didReceiveRemoteNotification:userInfo fetchCompletionHandler:^(UIBackgroundFetchResult result) {
-            //接受最后一个delegate的result，最后统一回调完成
-            fetchResult = result;
-        }];
-    }];
-    completionHandler(fetchResult);
-}
-
-#pragma mark iOS10以上 收到推送消息 <UserNotifications/UserNotifications.h>
-
-//  App在前台获取到通知
-- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
-{
-#ifdef DEBUG
-    NSLog(@"willPresentNotification：%@", notification.request.content.userInfo);
-#endif
-    __block UNNotificationPresentationOptions completionOptions = self.defaultNotificationPresentationOptions;
-    [self notifySelectorOfAllDelegates:@selector(userNotificationCenter:willPresentNotification:withCompletionHandler:) nofityHandler:^(id delegate) {
-        [delegate userNotificationCenter:center willPresentNotification:notification withCompletionHandler:^(UNNotificationPresentationOptions options) {
-            //接受最后一个delegate设置的options，且options不为空。
-            if (options != 0) {
-                completionOptions = options;
-            }
-        }];
-    }];
-    completionHandler(completionOptions);
-}
-
-// 应用在前台点击通知进入App时触发
-- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler
-{
-    [self notifySelectorOfAllDelegates:@selector(userNotificationCenter:didReceiveNotificationResponse:withCompletionHandler:) nofityHandler:^(id delegate) {
-        [delegate userNotificationCenter:center didReceiveNotificationResponse:response withCompletionHandler:^{
-            //不执行任何回调，统一最后回调完成。
-        }];
-    }];
-    completionHandler();
-}
 
 #pragma mark- Private Method
 
